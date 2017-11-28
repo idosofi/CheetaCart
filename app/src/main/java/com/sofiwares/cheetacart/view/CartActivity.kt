@@ -8,15 +8,22 @@ import android.support.v7.widget.LinearLayoutManager
 import com.sofiwares.cheetacart.R
 import com.sofiwares.cheetacart.viewmodel.CartListViewModel
 import kotlinx.android.synthetic.main.activity_cart.*
+import com.sofiwares.cheetacart.data.json.APIClient
+import com.sofiwares.cheetacart.data.json.APIService
+
 
 class CartActivity : AppCompatActivity() {
 
     private var mAdapter: CartItemListAdapter? = null
     private lateinit var mLayoutManager: LinearLayoutManager
+    private lateinit var apiInterface: APIService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
+
+        apiInterface = APIClient.getClient().create(APIService::class.java)
+
 
         val model = ViewModelProviders.of(this).get(CartListViewModel::class.java)
         model.cartList.observe(this, Observer { updatedList ->
