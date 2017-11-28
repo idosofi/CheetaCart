@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.sofiwares.cheetacart.R
-import com.sofiwares.cheetacart.data.PackagingType
 import com.sofiwares.cheetacart.data.converter.PackagingTypeToPriceConverter
 import com.sofiwares.cheetacart.data.converter.SubstitutableToColorStateListConveter
 import com.sofiwares.cheetacart.data.formatter.CurrencyFormatter
@@ -34,9 +33,10 @@ class CartItemListAdapter(private var mDataSet: ArrayList<CartItemModel>): Recyc
         // Load the image using glide library
         Glide.with(holder?.itemView?.context).load(
                 when(mDataSet[position].packagingType) {
-                    PackagingType.UNIT -> mDataSet[position].unitPhotoUrl
-                    PackagingType.CASE -> mDataSet[position].casePhotoUrl
-                    PackagingType.WEIGHT -> mDataSet[position].weightPhotoUrl
+                    "unit" -> mDataSet[position].unitPhotoUrl
+                    "case" -> mDataSet[position].casePhotoUrl
+                    "weight" -> mDataSet[position].weightPhotoUrl
+                    else -> ""
                 }).into(holder?.photo)
     }
 

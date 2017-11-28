@@ -1,16 +1,47 @@
 package com.sofiwares.cheetacart.data.json
 
 import com.google.gson.annotations.SerializedName
+import com.sofiwares.cheetacart.model.CartItemModel
 
-data class OrderItemsInformationItem(val product: Product?,
-                                     val quantity: Int = 0,
-                                     @SerializedName("product_id")
-                                     val productId: Int = 0,
-                                     @SerializedName("packaging_type")
-                                     val packagingType: String = "",
-                                     @SerializedName("sub_total")
-                                     val subTotal: Int = 0,
-                                     val id: Int = 0,
-                                     val substitutable: Boolean = false,
-                                     @SerializedName("order_id")
-                                     val orderId: Int = 0)
+data class OrderItemsInformationItem(
+
+	@field:SerializedName("product")
+	val product: Product? = null,
+
+	@field:SerializedName("quantity")
+	override var quantity: Double,
+
+	@field:SerializedName("product_id")
+	val productId: Int? = null,
+
+	@field:SerializedName("packaging_type")
+	override val packagingType: String,
+
+	@field:SerializedName("sub_total")
+	override val subTotal: Double,
+
+	@field:SerializedName("id")
+	val id: Int? = null,
+
+	@field:SerializedName("substitutable")
+	override val substitutable: Boolean,
+
+	@field:SerializedName("order_id")
+	val orderId: Int? = null): CartItemModel {
+
+	override val name: String
+		get() = product?.name ?: ""
+	override val price: Double
+		get() = when(packagingType) {
+			"unit" -> product?.unitPrice?.toDouble() ?: 0.0
+			"case" -> product?.casePrice?.toDouble() ?: 0.0
+			"weight" -> product?.weightPrice?.toDouble() ?: 0.0
+			else -> 0.0
+		}
+	override val unitPhotoUrl: String
+		get() = product?.unitPhotoFilename ?: ""
+	override val casePhotoUrl: String
+		get() = product?.packPhotoFile ?: ""
+	override val weightPhotoUrl: String
+		get() = product?.weightPhotoFilename ?: ""
+}
