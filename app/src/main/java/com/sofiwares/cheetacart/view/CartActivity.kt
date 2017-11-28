@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.sofiwares.cheetacart.R
+import com.sofiwares.cheetacart.data.formatter.CurrencyFormatter
 import com.sofiwares.cheetacart.viewmodel.CartListViewModel
 import kotlinx.android.synthetic.main.activity_cart.*
+
 
 class CartActivity : AppCompatActivity() {
 
@@ -20,14 +22,11 @@ class CartActivity : AppCompatActivity() {
 
         val model = ViewModelProviders.of(this).get(CartListViewModel::class.java)
         model.cartList.observe(this, Observer { updatedList ->
-
+            cartRecyclerView.adapter = CartItemListAdapter(updatedList!!)
         })
-//        model.videoList.observe(this, Observer<ArrayList<ContentModel>> { newList ->
-//            // videoList has changed, update the UI
-//            if (model.videoList.value!!.size > 0)
-//                transitionTo(SearchActivityScene.VIDEO_LIST)
-//            mAdapter?.loadNewItems(newList)
-//        })
+        model.cartTotal.observe(this, Observer { cartTotal ->
+            totalCalculated.text = CurrencyFormatter(cartTotal!!).format()
+        })
 
         // Set the layout manager for the recyclerView
         mLayoutManager = LinearLayoutManager(this)
