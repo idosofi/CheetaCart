@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CheetaCart</string>
+    <string name="cart_activity_name">Cart</string>
+
+    <string name="checkout">Proceed to checkout</string>
+    <string name="total">Total:</string>
+    <string name="vat_included">VAT Included:</string>
+</resources>
