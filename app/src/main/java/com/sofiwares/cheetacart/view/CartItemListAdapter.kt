@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.sofiwares.cheetacart.R
 import com.sofiwares.cheetacart.data.PackagingType
+import com.sofiwares.cheetacart.data.converter.PackagingTypeToPriceConverter
 import com.sofiwares.cheetacart.data.converter.SubstitutableToColorStateListConveter
 import com.sofiwares.cheetacart.data.formatter.CurrencyFormatter
 import com.sofiwares.cheetacart.model.CartItemModel
@@ -27,15 +28,15 @@ class CartItemListAdapter(private var mDataSet: ArrayList<CartItemModel>): Recyc
         holder?.name?.text = mDataSet[position].name
         holder?.subTotal?.text = CurrencyFormatter(mDataSet[position].subTotal).format()
         holder?.quantity?.text = mDataSet[position].quantity.toString()
-        holder?.price?.text = mDataSet[position].quantity.toString()
+        holder?.price?.text = PackagingTypeToPriceConverter(mDataSet[position].packagingType, mDataSet[position].price).convert()
         ViewCompat.setBackgroundTintList(holder?.substitutable,SubstitutableToColorStateListConveter(mDataSet[position].substitutable).convert())
 
         // Load the image using glide library
         Glide.with(holder?.itemView?.context).load(
                 when(mDataSet[position].packagingType) {
-                    PackagingType.UNIT -> mDataSet[position].unit_photo_url
-                    PackagingType.CASE -> mDataSet[position].case_photo_url
-                    PackagingType.WEIGHT -> mDataSet[position].weight_photo_url
+                    PackagingType.UNIT -> mDataSet[position].unitPhotoUrl
+                    PackagingType.CASE -> mDataSet[position].casePhotoUrl
+                    PackagingType.WEIGHT -> mDataSet[position].weightPhotoUrl
                 }).into(holder?.photo)
     }
 

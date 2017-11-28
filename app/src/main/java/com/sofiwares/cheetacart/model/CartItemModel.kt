@@ -11,8 +11,8 @@ interface CartItemModel {
     val subTotal: Float
     var quantity: Float
     val packagingType: PackagingType
-    val unit_photo_url: String
-    val case_photo_url: String
-    val weight_photo_url: String
+    val unitPhotoUrl: String
+    val casePhotoUrl: String
+    val weightPhotoUrl: String
     val substitutable: Boolean
 }
