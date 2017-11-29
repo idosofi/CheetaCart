@@ -34,7 +34,7 @@ class CartActivity : AppCompatActivity() {
         // use a linear layout manager
         cartRecyclerView.layoutManager = mLayoutManager
 
-        // specify an adapter (see also next example)
+        // specify an adapter
         mAdapter = CartItemListAdapter(model.cartList.value!!)
         cartRecyclerView.adapter = mAdapter
     }
