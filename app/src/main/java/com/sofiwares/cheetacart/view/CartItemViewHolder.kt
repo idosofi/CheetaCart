@@ -15,5 +15,5 @@ class CartItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     var price: TextView = itemView.findViewById(R.id.price)
     var quantity: TextView = itemView.findViewById(R.id.quantity)
     var substitutable: ImageView = itemView.findViewById(R.id.substitutable)
-    var subTotal: TextView = itemView.findViewById(R.id.subtotal)
+    var subTotal: TextView = itemView.findViewById(R.id.subTotal)
 }
