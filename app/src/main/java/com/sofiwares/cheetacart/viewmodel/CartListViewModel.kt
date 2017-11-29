@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class CartListViewModel: ViewModel() {
     var cartList = MutableLiveData<ArrayList<CartItemModel>>()
+    var cartTotal = MutableLiveData<Double>()
 
     init {
         cartList.value = arrayListOf()
@@ -21,10 +22,11 @@ class CartListViewModel: ViewModel() {
     }
 
     private fun loadCart() {
-        LoadCartTask(cartList).execute()
+        LoadCartTask(cartList, cartTotal).execute()
     }
 
-    class LoadCartTask(private var cartList: MutableLiveData<ArrayList<CartItemModel>>): AsyncTask<Void, Void, String>() {
+    class LoadCartTask(private var cartList: MutableLiveData<ArrayList<CartItemModel>>,
+                       private var cartTotal: MutableLiveData<Double>): AsyncTask<Void, Void, String>() {
 
         override fun doInBackground(vararg p0: Void?): String {
             val cart = Retrofit.Builder()
@@ -34,9 +36,12 @@ class CartListViewModel: ViewModel() {
                     .build()
 
             val api = cart.create(CartAPI::class.java)
-            val list = api.getCart().execute().body()?.orderItemsInformation
-            if (list != null)
-                cartList.postValue(ArrayList(list))
+            val cartResponse = api.getCart().execute().body()
+
+            if (cartResponse?.orderItemsInformation != null)
+                cartList.postValue(ArrayList(cartResponse.orderItemsInformation))
+
+            cartTotal.postValue(cartResponse?.cartTotal?.toDouble())
 
             return ""
         }

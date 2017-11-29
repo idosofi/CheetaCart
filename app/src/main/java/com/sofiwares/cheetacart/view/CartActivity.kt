@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.sofiwares.cheetacart.R
+import com.sofiwares.cheetacart.data.formatter.CurrencyFormatter
 import com.sofiwares.cheetacart.viewmodel.CartListViewModel
 import kotlinx.android.synthetic.main.activity_cart.*
 
@@ -22,6 +23,9 @@ class CartActivity : AppCompatActivity() {
         val model = ViewModelProviders.of(this).get(CartListViewModel::class.java)
         model.cartList.observe(this, Observer { updatedList ->
             cartRecyclerView.adapter = CartItemListAdapter(updatedList!!)
+        })
+        model.cartTotal.observe(this, Observer { cartTotal ->
+            totalCalculated.text = CurrencyFormatter(cartTotal!!).format()
         })
 
         // Set the layout manager for the recyclerView
